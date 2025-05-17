@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TradesController } from './trades.controller';
 import { TradesService } from './trades.service';
+import { TradesController } from './trades.controller';
+import { PrismaService } from '../../prisma/prisma.service';
 
 @Module({
   controllers: [TradesController],
-  providers: [TradesService],
+  providers: [TradesService, PrismaService],
 })
 export class TradesModule {}
