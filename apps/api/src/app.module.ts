@@ -6,7 +6,8 @@ import { TradesModule } from './trades/trades.module';
 import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
-  imports: [AuthModule, TradesModule, PrismaModule],
+  imports: [PrismaModule, AuthModule, TradesModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
