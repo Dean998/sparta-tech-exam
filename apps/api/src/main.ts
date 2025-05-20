@@ -2,15 +2,33 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { ValidationExceptionFilter } from './common/filters/validation-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors(); // Enable CORS for frontend communication
+
+  // Configure CORS
+  app.enableCors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    credentials: true,
+  });
+
   app.useGlobalPipes(
     new ValidationPipe({
-      transform: true,
       whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
     }),
+  );
+
+  app.useGlobalFilters(
+    new HttpExceptionFilter(),
+    new ValidationExceptionFilter(),
   );
 
   const config = new DocumentBuilder()
@@ -24,5 +42,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(8000);
+  console.log('API is running on: http://localhost:8000');
 }
 bootstrap();
