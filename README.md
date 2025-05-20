@@ -48,4 +48,3 @@
   ISO-formatted timestamp.
 - Only registered users can create trades on the platform.
 - Non-registered users can preview trades and insights on the platform.
-- 
