@@ -1,5 +1,4 @@
-import { IsEnum, IsNumber, IsDate, Min } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsEnum, IsNumber, Min } from 'class-validator';
 import { CommodityType } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -17,9 +16,4 @@ export class CreateTradeDto {
   @IsNumber()
   @Min(1)
   quantity: number;
-
-  @ApiProperty({ example: new Date() })
-  @Type(() => Date)
-  @IsDate()
-  timestamp: Date;
 }
