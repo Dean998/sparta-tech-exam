@@ -26,7 +26,7 @@ export class AuthService {
     };
   }
 
-  async register(email: string, password: string, name: string) {
+  async register(email: string, password: string) {
     const exists = await this.prisma.trader.findUnique({ where: { email } });
     if (exists) {
       throw new UnauthorizedException('User already exists');
@@ -37,11 +37,14 @@ export class AuthService {
       data: {
         email,
         password: hashedPassword,
-        name,
       },
     });
 
     const { password: _, ...result } = user;
-    return result;
+    const payload = { email: user.email, sub: user.id };
+    return {
+      ...result,
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }
