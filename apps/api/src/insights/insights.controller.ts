@@ -22,9 +22,9 @@ export class InsightsController {
   @ApiResponse({ status: 400, description: 'Invalid query parameters' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 500, description: 'Internal server error' })
-  async getInsights(@Query() query: GetInsightsDto) {
+  async getInsights() {
     try {
-      return await this.insightsService.getInsights(query);
+      return await this.insightsService.getInsights();
     } catch (error) {
       throw new BaseException(
         'Failed to fetch insights',

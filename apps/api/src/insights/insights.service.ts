@@ -11,7 +11,7 @@ export class InsightsService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async getInsights(query: GetInsightsDto) {
+  async getInsights() {
     try {
       const tradesByCommodity = await this.prisma.trade.groupBy({
         by: ['commodity'],
